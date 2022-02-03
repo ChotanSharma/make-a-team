@@ -1,0 +1,25 @@
+{
+  "name": "make-a-team",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChotanSharma/make-a-team.git"
+  },
+  "author": "Chotan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChotanSharma/make-a-team/issues"
+  },
+  "homepage": "https://github.com/ChotanSharma/make-a-team#readme",
+  "devDependencies": {
+    "jest": "^27.4.7"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.0"
+  }
+}
