@@ -1,10 +1,17 @@
+// import node_modules
 const fs = require('fs');
-const generatePage = require('./src/page-template.js');
 const inquirer = require('inquirer');
 
-const profileDataArgs = process.argv.slice(2);
+// generate the html page
+const generatePage = require('./src/page-template.js');
 
-const [name, github] = profileDataArgs;
+// import the team members' objects
+const Manager = require("./lib/Manager.js");
+const Engineer = require("./lib/Engineer.js");
+const Intern = require("./lib/Intern.js");
+
+// array for the team
+const theTeam = [];
 
 fs.writeFile('index.html', generatePage(name, github), err => {
     if (err) throw err;
