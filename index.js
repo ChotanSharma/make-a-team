@@ -13,6 +13,8 @@ const Intern = require("./lib/Intern.js");
 // array for the team
 const theTeam = [];
 
+
+
 fs.writeFile('index.html', generatePage(name, github), err => {
     if (err) throw err;
   
