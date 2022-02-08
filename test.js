@@ -1,8 +1,6 @@
-// import node_modules
 const fs = require('fs');
 const inquirer = require('inquirer');
 
-// generate the html page
 const generatePage = require('./src/page-template.js');
 
 // import the team members' objects
@@ -11,12 +9,10 @@ const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
 
 
-// arrays for the team members
-const managerArray = [];
-const employeeArray = [];
-//const internArray = [];
+// array for the team
+const theTeam = [];
 
-async function addManagerToTeam() {
+addManagerToTeam = () => {
     return inquirer.prompt([
         {
             type:'input',
@@ -80,22 +76,17 @@ async function addManagerToTeam() {
         const  { name, id, email, officeNumber } = managerInput; 
         const manager = new Manager (name, id, email, officeNumber);
 
-        managerArray.push(manager); 
         console.log(manager); 
-        for(let i =0; i < managerArray.length; i++) {
-            console.log(managerArray[i]);
-        }
+        return theTeam.push(manager); 
+
     })
 };
 
-addManagerToTeam()
-
-
-async function addOtherMembers() {
+addOtherMembers = () =>  {
 
     console.log(`
     =================
-    Adding other employees to the Team
+    Adding another employee to the Team
     =================
     `);
 
@@ -151,7 +142,7 @@ async function addOtherMembers() {
 
         {
             type:'input',
-            name:'github id',
+            name:'github',
             message: 'Please provide  the github id of the employee',
             when: (input) => input.role === 'Engineer',
             validate: nameInput => {
@@ -194,31 +185,49 @@ async function addOtherMembers() {
         let { name, id, email, role, github, school, confirmAddEmployee } = employeeData; 
         let employee; 
         
-        if (role === "Engineer") {
+        if (role === 'Engineer') {
             employee = new Engineer (name, id, email, github);
 
             console.log(employee);
 
-        } else if (role === "Intern") {
+        } else if (role === 'Intern') {
             employee = new Intern (name, id, email, school);
 
             console.log(employee);
         }
-        // populate the Array
+        // populate the teanArray
 
-        employeeArray.push(employee); 
+        theTeam.push(employee); 
 
         // to add more employee
 
         if (confirmAddEmployee) {
-            return addOtherMembers(employeeArray); 
+            return addOtherMembers(theTeam); 
         } else {
-            return employeeArray;
+            return theTeam;
         }
     })
 };
 
+//generate the html page
 
-(addOtherMembers());
+const writeFile = data => {fs.writeFile('./dist/index.html', data, err => {
+    if (err) throw err;
+  
+    console.log('Portfolio complete! Check out index.html to see the output!');
+    })
+};
 
+
+addManagerToTeam()
+.then(addOtherMembers)
+.then(theTeam => {
+        return generatePage(theTeam);
+        })
+.then(pageHTML => {
+    return writeFile(pageHTML);
+})
+.catch(err => {
+console.log(err);
+});
 
