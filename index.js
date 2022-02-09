@@ -12,6 +12,7 @@ const Intern = require("./lib/Intern.js");
 // array for the team
 const theTeam = [];
 
+
 addManagerToTeam = () => {
     return inquirer.prompt([
         {
